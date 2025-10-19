@@ -11,7 +11,7 @@ function SBIDashboard({ name: customerName, accountNumber, branch, hasDeposit, h
 
         {hasDeposit && <DepositAccount />}
         {hasLoan && <LoanAccount />}
-         {hasCreditCard && <CreditCardAccount />}
+        {hasCreditCard && <CreditCardAccount />}
     </div>);
 }
 
@@ -41,15 +41,15 @@ function DepositAccount() {
     </div>)
 }
 
-function CreditCardAccount(){
+function CreditCardAccount() {
     const [creditLimit, setCreditLimit] = useState(1000000);
     const [spent, setSpent] = useState(200000);
     const [available, setAvailable] = useState(creditLimit - spent)
-    function updateCreditAmount(amount){
+    function updateCreditAmount(amount) {
         setSpent(spent + amount)
         setAvailable(available - amount)
     }
-return (<div style={{ border: "1px solid #0077b6", padding: "10px", margin: "10px" }}>
+    return (<div style={{ border: "1px solid #0077b6", padding: "10px", margin: "10px" }}>
         <h3>Credit Card</h3>
         <p>Credit Limit : Rs:{creditLimit}</p>
         <p>Spent : {spent}</p>
@@ -61,4 +61,4 @@ return (<div style={{ border: "1px solid #0077b6", padding: "10px", margin: "10p
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
 root.render(<SBIDashboard name="Harish" accountNumber="46858" branch="Andheri East"
-    hasDeposit={true} hasLoan={true} hasCreditCard={true}/>)
+    hasDeposit={true} hasLoan={true} hasCreditCard={true} />)
