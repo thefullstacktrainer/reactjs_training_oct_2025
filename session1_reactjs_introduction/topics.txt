@@ -1,0 +1,29 @@
+JS topics
+
+1. Higher Order Function
+2. Callback Function
+3. Arrow Function
+4. Prototype
+5. this
+6. call apply bind
+7. Promise
+
+
+MenuBarComponent
+SearchBarComponent
+Header
+MainComponent
+Product
+
+ES 6 Features
+- Arrow Functions
+    (a,b) => {};
+    (a,b) => "Hello";
+    a => "Hello";
+- let : block scoped {}
+  var : function scoped
+  const : block scoped
+- destructring
+- spread and rest operators
+- async / await
+

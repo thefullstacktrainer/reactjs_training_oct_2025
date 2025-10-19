@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First React App</title>
+    <style>
+        /* Simple Todo app styles */
+        .todo-container {
+            max-width: 520px;
+            margin: 28px auto;
+            padding: 18px;
+            border-radius: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+            font-family: Arial, Helvetica, sans-serif;
+            background: #fff;
+        }
+        .todo-container h1 {
+            margin: 0 0 12px 0;
+            font-size: 20px;
+            text-align: center;
+        }
+        .todo-input { display:flex; gap:8px; margin-bottom:12px; }
+        .todo-input input { flex:1; padding:8px 10px; font-size:14px; border:1px solid #ddd; border-radius:4px; }
+        .todo-input button { padding:8px 12px; border-radius:4px; border:none; background:#007bff; color:#fff; cursor:pointer; }
+        .todo-input button:hover{opacity:0.95}
+        .todo-list { list-style:none; padding:0; margin:0; }
+        .todo-item { display:flex; justify-content:space-between; padding:8px 10px; border-bottom:1px solid #f0f0f0; align-items:center }
+        .todo-item button { background:#dc3545; color:#fff; border:none; padding:6px 8px; border-radius:4px; cursor:pointer }
+        .todo-actions { margin-top:12px; text-align:center }
+        .todo-actions button { background:#6c757d; color:#fff; border:none; padding:8px 10px; border-radius:4px; cursor:pointer }
+        .empty { color:#777; padding:8px 10px }
+        body { background:#f7f9fb; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <script>
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+
+        function TodoApp() {
+            const [items, setItems] = React.useState(() => {
+                try { return JSON.parse(localStorage.getItem('todos') || '[]'); }
+                catch (e) { return []; }
+            });
+            const [text, setText] = React.useState('');
+
+            React.useEffect(() => {
+                localStorage.setItem('todos', JSON.stringify(items));
+            }, [items]);
+
+            const add = () => {
+                const t = (text || '').trim();
+                if (!t) return;
+                setItems(prev => [...prev, { id: Date.now(), text: t }]);
+                setText('');
+            };
+
+            const remove = (id) => setItems(prev => prev.filter(i => i.id !== id));
+            const clearAll = () => setItems([]);
+
+            return React.createElement('div', { className: 'todo-container' },
+                React.createElement('h1', null, 'Todo List'),
+                React.createElement('div', { className: 'todo-input' },
+                    React.createElement('input', {
+                        type: 'text',
+                        value: text,
+                        placeholder: 'Add a todo and press Enter or click Add',
+                        onChange: e => setText(e.target.value),
+                        onKeyDown: e => { if (e.key === 'Enter') add(); }
+                    }),
+                    React.createElement('button', { onClick: add }, 'Add')
+                ),
+                React.createElement('ul', { className: 'todo-list' },
+                    items.length === 0
+                        ? React.createElement('li', { className: 'empty' }, 'No todos yet')
+                        : items.map(item => React.createElement('li', { key: item.id, className: 'todo-item' },
+                            React.createElement('span', null, item.text),
+                            React.createElement('button', { onClick: () => remove(item.id) }, 'Delete')
+                        ))
+                ),
+                React.createElement('div', { className: 'todo-actions' },
+                    items.length > 0 ? React.createElement('button', { onClick: clearAll }, 'Clear All') : null
+                )
+            );
+        }
+
+        root.render(React.createElement(TodoApp));
+    </script>
+</body>
+</html>
