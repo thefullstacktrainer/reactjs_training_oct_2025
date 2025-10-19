@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBI</title>
+</head>
+
+<body>
+    <!-- inside div Bank component is rendered -->
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+
+        function BankComponent(props) {
+   
+         console.log(props)
+            return <div>
+                <h1> Welcome To SBI</h1>
+
+                <AccountComponent {...props} />
+            </div>
+        }
+
+        function AccountComponent(props) {
+            const { useState } = React;
+            const [address, setAddress] = useState("Bengaluru"); // [state, method to update state]
+
+            return <div> This is account component
+                <h3> Account holder name : {props.account_holdername}</h3>
+                <h3>Account id : {props.accountid}</h3>
+                <h3>Account Type : {props.accountType}</h3>
+                <h3>IFSC : {props.IFSC}</h3>
+                <h3>Address : {address}</h3>
+            </div>
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("app"))
+        // inside div Bank component is rendered 
+        root.render(<BankComponent account_holdername="Miraj"
+            accountid="12345" accountType="Savings" IFSC="SBI0001234" />)
+
+    </script>
+</body>
+
+</html>

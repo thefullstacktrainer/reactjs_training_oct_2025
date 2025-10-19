@@ -1,0 +1,11 @@
+ES6 revision
+React Recap
+ReactJS Concepts
+1. Creating React Component
+2. Creating React Component with JSX
+3. Passing Props
+4. Using State
+5. Creating Class Components
+6. Creating Functional Components
+7. LifeCycle Methods
+8. Prop Types

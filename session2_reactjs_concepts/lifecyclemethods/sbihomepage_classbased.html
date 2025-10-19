@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBI</title>
+</head>
+
+<body>
+    <!-- inside div Bank component is rendered -->
+    <div id="app"></div>
+    <div>Footer</div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        class BankComponent extends React.Component {
+            constructor(props) {
+
+                super(props);
+                console.log(props)
+                this.state = {
+                    address: "Bengaluru"
+                }
+            }
+            componentDidMount() {
+                console.log(" componentDidMount called")
+                setTimeout(() => {
+                    console.log("setTimeout is called")
+                    this.setState({ address: "Benglauru North" })
+                }, 1000)
+                setTimeout(() => {
+                    root.unmount()
+                },5000)
+            }
+
+            componentDidUpdate() {
+                console.log(" componentDidUpdate called")
+                this.test()
+            }
+
+            componentWillUnmount() {
+                console.log(" componentWillUnmount called")
+            }
+
+            test(){
+                console.log("Test is called")
+            }
+            render() {
+                return (<div>
+                    <h1>Welcome To SBI</h1>
+                    <h3>Account holder name : {this.props.account_holdername}</h3>
+                    <h3>Account id : {this.props.accountid}</h3>
+                    <h3>Account Type : {this.props.accountType}</h3>
+                    <h3>IFSC : {this.props.IFSC}</h3>
+                    <h3>address : {this.state.address}</h3>
+                </div>);
+            }
+        }
+        const root = ReactDOM.createRoot(document.getElementById("app"))
+        // inside div Bank component is rendered 
+        root.render(<BankComponent account_holdername="Miraj"
+            accountid="12345" accountType="Savings" IFSC="SBI0001234" />)
+    </script>
+</body>
+
+</html>

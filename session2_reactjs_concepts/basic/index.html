@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBI</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.28.4/babel.min.js" integrity="sha512-BCw4VuBF2HKIgxDP8K7DRHcHzazAAND+5+2E7GgX3CC1u1pteJ415mMJlQfUORjkFT64irzu1jIV93Vfvzkevw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    
+        <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        // function Greeting(props){
+        //     return React.createElement("h1",{},"Welcome To SBI.!")
+        // }
+
+        // function GreetingWithJSX(props){
+        //     return <h1>Welcome To SBI.! {props.name}</h1>
+        // }
+
+        function BankComponent(props){
+            return <h1>Welcome To SBI {props.name} .!</h1>
+        }
+
+        // ReactDOM.render(Greeting(),document.getElementById("app"))
+        const root = ReactDOM.createRoot(document.getElementById("app"))
+        // root.render(GreetingWithJSX())
+
+        root.render(<BankComponent name="Miraj"/>)
+
+    </script>
+</body>
+</html>
