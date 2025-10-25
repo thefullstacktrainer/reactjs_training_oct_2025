@@ -27,7 +27,7 @@ function SBIDashboard() {
 
   return (
     <div>
-      <div className="dashboard-header">💙 SBI Banking Dashboard</div>
+      <div className="dashboard-header">SBI Banking Dashboard</div>
 
       <div className="dashboard-container">
         <div className="customer-info">
