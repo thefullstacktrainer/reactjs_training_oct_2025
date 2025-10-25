@@ -9,3 +9,8 @@ function formatCurrency(amount){
 function logEvent(message){
     console.log("[SBI Log] : " + message)
 }
+
+const helper = {
+    formatCurrency,
+    logEvent
+}

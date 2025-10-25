@@ -9,7 +9,7 @@ const bankingService = {
         hasCreditCard:true
     }),
     fetchInterestRates : async () => {
-        logEvent("Fetching interest rates...");
+        helper.logEvent("Fetching interest rates...");
 
         return new Promise((resolve) => {
             setTimeout(() => {
