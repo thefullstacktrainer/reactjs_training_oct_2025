@@ -44,16 +44,20 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 1rem;
+  align-items: stretch;
 }
 
 /* Individual Account Card */
 .account-card {
+  display: flex;
+  flex-direction: column;
   background: white;
   border-radius: 10px;
-  padding: 1rem 1.2rem;
+  padding: 1.2rem 1.4rem;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   border-top: 4px solid #0077b6;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 250px;
 }
 
 .account-card:hover {
@@ -61,7 +65,20 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* Buttons */
+.account-card h3 {
+  color: #003366;
+  margin-bottom: 0.5rem;
+}
+
+.account-card p {
+  margin: 0.3rem 0;
+}
+
+.account-card .actions {
+  margin-top: auto;
+  padding-top: 0.8rem;
+}
+
 .account-card button {
   background-color: #0077b6;
   color: white;
@@ -77,6 +94,51 @@ body {
   background-color: #005f8e;
 }
 
+/* --- Filter & Search Bar --- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.filter-bar input[type="text"] {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  margin-right: 0.5rem;
+}
+
+.filter-bar select {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  font-size: 0.95rem;
+}
+
+.filter-bar select:focus,
+.filter-bar input:focus {
+  outline: none;
+  border-color: #0077b6;
+  box-shadow: 0 0 4px rgba(0, 119, 182, 0.3);
+}
+
+/* --- Message when no results --- */
+.no-results {
+  text-align: center;
+  font-style: italic;
+  color: #777;
+  margin-top: 1rem;
+}
+
 /* Responsive adjustments */
 @media (max-width: 600px) {
   .dashboard-header {
@@ -84,5 +146,14 @@ body {
   }
   .account-card {
     font-size: 0.9rem;
+  }
+  .filter-bar {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .filter-bar input,
+  .filter-bar select {
+    width: 100%;
+    margin-right: 0;
   }
 }
