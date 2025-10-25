@@ -51,11 +51,11 @@ body {
 @keyframes fadeInCard {
   from {
     opacity: 0;
-    transform: scale(0.96);
+    transform: translateY(10px) scale(0.98);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -70,17 +70,43 @@ body {
   border-top: 4px solid #0077b6;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   min-height: 250px;
-
-  /* 👇 Animation added */
   opacity: 0;
   animation: fadeInCard 0.4s ease forwards;
 }
 
+/* Staggered delay for each card (wave effect) */
+.cards-grid .account-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.cards-grid .account-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.cards-grid .account-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.cards-grid .account-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.cards-grid .account-card:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.cards-grid .account-card:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.cards-grid .account-card:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.cards-grid .account-card:nth-child(8) {
+  animation-delay: 0.8s;
+}
+
+/* Hover */
 .account-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
+/* Headings and spacing inside card */
 .account-card h3 {
   color: #003366;
   margin-bottom: 0.5rem;
