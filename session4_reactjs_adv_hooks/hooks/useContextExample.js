@@ -32,8 +32,6 @@ function Theme() {
         <ThemedBox />
     </ThemeContext.Provider>
 
-
-
 }
 
 const root = ReactDOM.createRoot(document.getElementById("app"));
