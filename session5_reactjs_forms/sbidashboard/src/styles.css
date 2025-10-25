@@ -1,0 +1,88 @@
+/* Base Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+  line-height: 1.5;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  background-color: #003366;
+  color: white;
+  padding: 1.2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+/* Customer Info */
+.customer-info {
+  background: white;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Cards Layout */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+/* Individual Account Card */
+.account-card {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #0077b6;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.account-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Buttons */
+.account-card button {
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.account-card button:hover {
+  background-color: #005f8e;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .dashboard-header {
+    font-size: 1.2rem;
+  }
+  .account-card {
+    font-size: 0.9rem;
+  }
+}
