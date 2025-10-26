@@ -3,7 +3,7 @@ import DepositAccount from "./DepositAccount";
 import LoanAccount from "./LoanAccount";
 import CreditCardAccount from "./CreditCardAccount";
 import bankingService from "../services/bankingService";
-
+import FeedbackForm from "./FeedbackForm";
 
 export default function SBIDashboard() {
     const [customer, setCustomer] = useState({});
@@ -62,6 +62,10 @@ export default function SBIDashboard() {
                     ) : (
                         <p className="no-results">No accounts match your search.</p>
                     )}
+                </div>
+
+                <div className="feedback-section">
+                    <FeedbackForm />
                 </div>
             </div>
         </div>
