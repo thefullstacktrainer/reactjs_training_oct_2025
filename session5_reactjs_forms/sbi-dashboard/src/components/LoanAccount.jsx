@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState } from "react";
 import helper from "../utils/helper";
 
-function LoanAccount() {
+export default function LoanAccount() {
   const [loanAmount, updateLoanAmount] = useState(1000000);
   const [emisPaid, updateEmisPaid] = useState(12);
 
@@ -24,5 +24,3 @@ function LoanAccount() {
     </div>
   );
 }
-
-export default LoanAccount;

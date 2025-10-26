@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState } from "react";
 import helper from "../utils/helper";
 
-function CreditCardAccount() {
+export default function CreditCardAccount() {
   const [creditLimit, setCreditLimit] = useState(1000000);
   const [spent, setSpent] = useState(200000);
   const available = creditLimit - spent;
@@ -23,5 +23,3 @@ function CreditCardAccount() {
     </div>
   );
 }
-
-export default CreditCardAccount;

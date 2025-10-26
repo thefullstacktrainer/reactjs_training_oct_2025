@@ -20,5 +20,4 @@ const bankingService = {
   },
 };
 
-
 export default bankingService;

@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState } from "react";
 import helper from "../utils/helper";
 
-function DepositAccount() {
+export default function DepositAccount() {
   const [balance, setBalance] = useState(100000);
 
   return (
@@ -17,5 +17,3 @@ function DepositAccount() {
     </div>
   );
 }
-
-export default DepositAccount;
