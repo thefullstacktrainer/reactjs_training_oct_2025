@@ -1,0 +1,9 @@
+npx create-react-app sbi-dashboard-app
+
+package.json
+- dependencies
+- devDependencies
+
+
+npm install ajv ajv-keywords
+
