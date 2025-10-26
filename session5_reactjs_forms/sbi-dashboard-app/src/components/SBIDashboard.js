@@ -46,7 +46,7 @@ function SBIDashboard() {
           )}
         </div>
 
-        <div className="filter-bar">
+        {/* <div className="filter-bar">
           <input
             type="text"
             placeholder="Search account type..."
@@ -62,7 +62,7 @@ function SBIDashboard() {
             <option value="loan">Loan</option>
             <option value="credit">Credit Card</option>
           </select>
-        </div>
+        </div> */}
 
         <div className="cards-grid">
           {filteredAccounts.length > 0 ? (
