@@ -66,8 +66,8 @@ export default function SBIDashboard() {
                 </div>
 
                 <div className="feedback-section">
-                    {/* <FeedbackForm /> */}
-                    <FeedbackFormUncontrolled />
+                    <FeedbackForm />
+                    {/* <FeedbackFormUncontrolled /> */}
                 </div>
             </div>
         </div>
