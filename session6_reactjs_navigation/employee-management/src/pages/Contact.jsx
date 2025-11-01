@@ -2,6 +2,12 @@ import React from 'react'
 
 export default function Contact() {
   return (
-    <div>Contact</div>
+    <>
+        <h2>Contact</h2>
+        <p>
+            You can contact us at Shastri Nagar Delhi.
+        </p>
+    </>
+
   )
 }
