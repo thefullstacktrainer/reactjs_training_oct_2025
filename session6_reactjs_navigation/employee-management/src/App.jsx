@@ -2,9 +2,9 @@ function App() {
 
   return (
     <>
-      <p className="read-the-docs">
-        Welcome to Employee Management
-      </p>
+      <div style={{padding:'2rem'}}>
+          <h1>Employee Management</h1>
+      </div>
     </>
   )
 }
