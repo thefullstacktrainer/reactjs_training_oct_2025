@@ -3,12 +3,15 @@ import AppLayout from './layouts/AppLayout';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
-import EmployeeList from './pages/EmployeeList';
+import Login from './pages/Login.jsx';               
+import RequireAuth from './components/RequireAuth.jsx'; 
+
+import EmployeeLayout from './pages/employees/EmployeeLayout.jsx';
+import EmployeeList from './pages/EmployeeList.jsx';
+import EmployeeStats from './pages/employees/EmployeeStats.jsx';
 import AddEmployee from './pages/AddEmployee';
 import ViewEmployee from './pages/ViewEmployee';
 import EditEmployee from './pages/EditEmployee';
-import EmployeeLayout from './pages/employees/EmployeeLayout';
-import EmployeeStats from './pages/employees/EmployeeStats';
 
 export default function App() {
   return (
@@ -17,16 +20,18 @@ export default function App() {
         <Route index element={<Home />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="login" element={<Login />} />
 
-        <Route path="/employees" element={<EmployeeLayout />}>
-          <Route index element={<EmployeeList />} />
-          <Route path="stats" element={<EmployeeStats />} />
-          <Route path="add" element={<AddEmployee />} />
-          <Route path=":id" element={<ViewEmployee />} />
-          <Route path=":id/edit" element={<EditEmployee />} />
+        {/* Protected employees area */}
+        <Route element={<RequireAuth />}>
+          <Route path="employees" element={<EmployeeLayout />}>
+            <Route index element={<EmployeeList />} />
+            <Route path="stats" element={<EmployeeStats />} />
+            <Route path="add" element={<AddEmployee />} />
+            <Route path=":id" element={<ViewEmployee />} />
+            <Route path=":id/edit" element={<EditEmployee />} />
+          </Route>
         </Route>
-
-
 
       </Route>
     </Routes>

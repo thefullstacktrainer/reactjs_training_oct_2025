@@ -1,7 +1,9 @@
-import React from 'react'
-import { Outlet, NavLink } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
 
 export default function AppLayout() {
+  const { user, logout } = useAuth();
+
   return (
     <div>
 
@@ -30,6 +32,17 @@ export default function AppLayout() {
           })}>Contact</NavLink>
         </nav>
 
+
+       <div style={{ position: 'absolute', right: 16, top: 12 }}>
+          {user ? (
+            <>
+              <span style={{ marginRight: 12 }}>Hi, {user.username}</span>
+              <button onClick={logout}>Logout</button>
+            </>
+          ) : (
+            <NavLink to="/login">Login</NavLink>
+          )}
+        </div>
       </header>
 
       <main style={{ padding: '1rem' }}>
