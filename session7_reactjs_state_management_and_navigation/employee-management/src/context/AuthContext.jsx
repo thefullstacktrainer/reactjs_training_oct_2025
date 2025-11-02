@@ -25,11 +25,12 @@ export function AuthProvider({children}) {
             return { ok: true }
         }
 
-        if (username && password){
-            const u = {username:'admin', role : 'admin'}
-            setUser(u)
-            return {ok : true}
-        }
+
+        // if (username && password){
+        //     const u = {username:'admin', role : 'admin'}
+        //     setUser(u)
+        //     return {ok : true}
+        // }
         return { ok: false, message: "invalid credentials" }
     }
 
