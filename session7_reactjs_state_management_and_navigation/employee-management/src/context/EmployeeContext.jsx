@@ -15,7 +15,14 @@ export function EmployeeProvider({ children }) {
         setEmployees([...employees, { ...emp, id: employees.length + 1 }])
     }
 
-    return (<EmployeeContext.Provider value={{ employees, addEmployee }}>
+    const updateEmployee = (updatedEmployee) => {
+        setEmployees((prev) =>
+            prev.map((emp) => updatedEmployee.id == emp.id ? updatedEmployee : emp)
+        )
+    }
+
+
+    return (<EmployeeContext.Provider value={{ employees, addEmployee, updateEmployee}}>
         {children}
     </EmployeeContext.Provider>)
 

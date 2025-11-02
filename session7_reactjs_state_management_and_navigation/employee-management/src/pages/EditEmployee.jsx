@@ -5,7 +5,7 @@ import { EmployeeContext } from '../context/EmployeeContext.jsx';
 export default function EditEmployee() {
   const { id } = useParams();
   const { employees } = useContext(EmployeeContext);
-  const { addEmployee } = useContext(EmployeeContext); // For future updates we’ll replace with updateEmployee
+  const { updateEmployee } = useContext(EmployeeContext); 
   const navigate = useNavigate();
 
   const existing = employees.find((emp) => emp.id === parseInt(id));
@@ -23,7 +23,8 @@ export default function EditEmployee() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`This will update employee ${formData.name} (feature in next module)`);
+
+    updateEmployee(formData)
     navigate(`/employees/${id}`);
   };
 
