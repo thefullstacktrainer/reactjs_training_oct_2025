@@ -9,7 +9,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <EmployeeProvider>
-        <App />
+        <App />  { /* this is children in EmployeeProvider */}
       </EmployeeProvider>
     </BrowserRouter>
   </StrictMode>,
