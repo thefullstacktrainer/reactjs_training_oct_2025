@@ -6,7 +6,7 @@ export default function ViewEmployee() {
   const { id } = useParams();
   const { employees } = useContext(EmployeeContext);
 
-  const employee = employees.find((emp) => emp.id === parseInt(id));
+  const employee = employees.find((emp) => emp.id === id);
 
   if (!employee) {
     return (

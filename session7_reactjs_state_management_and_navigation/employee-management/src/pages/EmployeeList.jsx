@@ -26,7 +26,6 @@ export default function EmployeeList() {
       <table border="1" cellPadding="8" style={{ borderCollapse: 'collapse', width: '100%' }}>
         <thead>
           <tr style={{ backgroundColor: '#eee' }}>
-            <th>ID</th>
             <th>Name</th>
             <th>Role</th>
             <th>Department</th>
@@ -36,7 +35,6 @@ export default function EmployeeList() {
         <tbody>
           {employees.map((emp) => (
             <tr key={emp.id}>
-              <td>{emp.id}</td>
               <td>{emp.name}</td>
               <td>{emp.role}</td>
               <td>{emp.department}</td>

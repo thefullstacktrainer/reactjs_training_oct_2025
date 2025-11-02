@@ -7,12 +7,12 @@ export default function EmployeeStats() {
     const { employees } = useContext(EmployeeContext);
     const total = employees.length;
     const departments = [...new Set(employees.map(e => e.department))]
-    console.log(departments)
+    console.log(departments.join(","))
     return (
         <div>
             <h3> Employee Statistics</h3>
             <p><strong>Total Employees :</strong> {total}</p>
-            <p><strong>Departments :</strong> {departments}</p>
+            <p><strong>Departments :</strong> {departments.join(", ")}</p>
 
         </div>
 

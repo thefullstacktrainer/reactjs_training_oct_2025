@@ -8,7 +8,7 @@ export default function EditEmployee() {
   const { addEmployee } = useContext(EmployeeContext); // For future updates we’ll replace with updateEmployee
   const navigate = useNavigate();
 
-  const existing = employees.find((emp) => emp.id === parseInt(id));
+  const existing = employees.find((emp) => emp.id === id);
 
   const [formData, setFormData] = useState(existing || {});
 

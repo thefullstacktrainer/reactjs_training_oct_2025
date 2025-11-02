@@ -6,7 +6,7 @@ export default function ViewEmployee() {
   const { id } = useParams();
   const { employees, deleteEmployee } = useContext(EmployeeContext);
   const navigate = useNavigate();
-  const employee = employees.find((emp) => emp.id === parseInt(id));
+  const employee = employees.find((emp) => emp.id === id);
 
 
   if (!employee) {
@@ -29,7 +29,6 @@ export default function ViewEmployee() {
   return (
     <div>
       <h2>Employee Details</h2>
-      <p><strong>ID:</strong> {employee.id}</p>
       <p><strong>Name:</strong> {employee.name}</p>
       <p><strong>Role:</strong> {employee.role}</p>
       <p><strong>Department:</strong> {employee.department}</p>

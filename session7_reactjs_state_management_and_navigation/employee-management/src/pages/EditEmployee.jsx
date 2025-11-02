@@ -8,7 +8,7 @@ export default function EditEmployee() {
   const { updateEmployee } = useContext(EmployeeContext); 
   const navigate = useNavigate();
 
-  const existing = employees.find((emp) => emp.id === parseInt(id));
+  const existing = employees.find((emp) => emp.id === id);
 
   const [formData, setFormData] = useState(existing || {});
 
@@ -24,7 +24,7 @@ export default function EditEmployee() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    updateEmployee(formData)
+    updateEmployee(id, formData)
     navigate(`/employees/${id}`);
   };
 

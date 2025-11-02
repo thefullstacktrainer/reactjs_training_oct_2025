@@ -1,34 +1,35 @@
-import React from 'react'
-import { createContext, useState } from 'react'
-
+import React, { createContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid'; 
 
 export const EmployeeContext = createContext();
 
 export function EmployeeProvider({ children }) {
-    const [employees, setEmployees] = useState([
-        { id: 1, name: 'Ramesh', role: 'Developer', department: 'IT' },
-        { id: 2, name: 'Priya', role: 'HR Manager', department: 'Human Resources' },
-        { id: 3, name: 'Kiran', role: 'Accountant', department: 'Finance' }
-    ])
+  const [employees, setEmployees] = useState([
+    { id: uuidv4(), name: 'Ramesh', role: 'Developer', department: 'IT' },
+    { id: uuidv4(), name: 'Priya', role: 'HR Manager', department: 'Human Resources' },
+    { id: uuidv4(), name: 'Kiran', role: 'Accountant', department: 'Finance' },
+  ]);
 
-    const addEmployee = (emp) => {
-        setEmployees([...employees, { ...emp, id: employees.length + 1 }])
-    }
+  const addEmployee = (emp) => {
+    const newEmp = { ...emp, id: uuidv4() };
+    setEmployees([...employees, newEmp]);
+  };
 
-    const updateEmployee = (updatedEmployee) => {
-        setEmployees((prev) =>
-            prev.map((emp) => updatedEmployee.id == emp.id ? updatedEmployee : emp)
-        )
-    }
+  const updateEmployee = (id, updatedEmp) => {
+    setEmployees((prev) =>
+      prev.map((emp) => (emp.id === id ? { ...emp, ...updatedEmp } : emp))
+    );
+  };
 
-    const deleteEmployee = (employeeId) => {
-        setEmployees((prev) =>
-            prev.filter((emp) => parseInt(employeeId) !== emp.id)
-        )
-    }
+  const deleteEmployee = (id) => {
+    setEmployees((prev) => prev.filter((emp) => emp.id !== id));
+  };
 
-    return (<EmployeeContext.Provider value={{ employees, addEmployee, updateEmployee, deleteEmployee }}>
-        {children}
-    </EmployeeContext.Provider>)
-
+  return (
+    <EmployeeContext.Provider
+      value={{ employees, addEmployee, updateEmployee, deleteEmployee }}
+    >
+      {children}
+    </EmployeeContext.Provider>
+  );
 }
