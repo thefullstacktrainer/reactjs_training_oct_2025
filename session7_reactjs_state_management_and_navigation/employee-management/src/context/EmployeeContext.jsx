@@ -21,8 +21,13 @@ export function EmployeeProvider({ children }) {
         )
     }
 
+    const deleteEmployee = (employeeId) => {
+        setEmployees((prev) =>
+            prev.filter((emp) => parseInt(employeeId) !== emp.id)
+        )
+    }
 
-    return (<EmployeeContext.Provider value={{ employees, addEmployee, updateEmployee}}>
+    return (<EmployeeContext.Provider value={{ employees, addEmployee, updateEmployee, deleteEmployee }}>
         {children}
     </EmployeeContext.Provider>)
 

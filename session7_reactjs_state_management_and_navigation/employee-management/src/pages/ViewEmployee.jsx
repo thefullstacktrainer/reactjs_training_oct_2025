@@ -1,12 +1,13 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { EmployeeContext } from '../context/EmployeeContext.jsx';
 
 export default function ViewEmployee() {
   const { id } = useParams();
-  const { employees } = useContext(EmployeeContext);
-
+  const { employees, deleteEmployee } = useContext(EmployeeContext);
+  const navigate = useNavigate();
   const employee = employees.find((emp) => emp.id === parseInt(id));
+
 
   if (!employee) {
     return (
@@ -15,6 +16,14 @@ export default function ViewEmployee() {
         <Link to="/employees">Go Back</Link>
       </div>
     );
+  }
+
+  const handleDelete = () => {
+    const confirmDelete = window.confirm(`Are you sure you want to delete ${employee.name}`)
+    if (confirmDelete) {
+      deleteEmployee(id);
+      navigate('/employees')
+    }
   }
 
   return (
@@ -27,9 +36,11 @@ export default function ViewEmployee() {
 
       <div style={{ marginTop: '1rem' }}>
         <Link to={`/employees/${id}/edit`} style={{ marginRight: '1rem' }}>
-          Edit
+          <button>Edit</button>
         </Link>
-        <Link to="/employees">Back to List</Link>
+        &nbsp;
+        <button onClick={handleDelete} style={{ color: 'white', backgroundColor: 'tomato' }}>Delete</button>
+        <Link to="/employees" style={{ marginLeft: '1rem' }}>Back to List</Link>
       </div>
     </div>
   );
