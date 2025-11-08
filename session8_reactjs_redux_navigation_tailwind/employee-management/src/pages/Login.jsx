@@ -9,6 +9,7 @@ export default function Login() {
   const [err, setErr] = useState("");
   const [toast, setToast] = useState("");
   const [loading, setLoading] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
 
   const auth = useAuth();
   const navigate = useNavigate();
@@ -23,23 +24,33 @@ export default function Login() {
     setLoading(false);
 
     if (res?.ok) {
-      setToast("Login successful");
-      setTimeout(() => navigate(from, { replace: true }), 1800);
+      setToast(`Welcome back, ${username}!`);
+      setRedirecting(true);
+      setTimeout(() => {
+        setRedirecting(false);
+        navigate(from, { replace: true });
+      }, 2000);
     } else {
       setErr(res?.message || "Login failed");
     }
   };
 
   return (
-    <div className="max-w-sm mx-auto bg-white p-6 rounded-lg shadow-md mt-12 relative">
+    <div className="relative max-w-sm mx-auto bg-white p-6 rounded-lg shadow-md mt-20">
       {toast && <Toast message={toast} onClose={() => setToast("")} />}
+
+      {redirecting && (
+        <div className="absolute inset-0 bg-white/80 flex flex-col justify-center items-center rounded-lg z-40">
+          <div className="loader mb-3"></div>
+          <p className="text-gray-700 text-sm">Logging in... Redirecting...</p>
+        </div>
+      )}
+
       <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">
         Login
       </h2>
 
-      {err && (
-        <div className="text-red-600 text-sm text-center mb-4">{err}</div>
-      )}
+      {err && <div className="text-red-600 text-sm text-center mb-4">{err}</div>}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -49,7 +60,8 @@ export default function Login() {
           <input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+            disabled={loading || redirecting}
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 disabled:opacity-60"
             placeholder="Enter username"
           />
         </div>
@@ -62,16 +74,19 @@ export default function Login() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+            disabled={loading || redirecting}
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 disabled:opacity-60"
             placeholder="Enter password"
           />
         </div>
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || redirecting}
           className={`w-full text-white font-medium py-2 rounded ${
-            loading ? "bg-blue-400 cursor-wait" : "bg-blue-600 hover:bg-blue-700"
+            loading || redirecting
+              ? "bg-blue-400 cursor-wait"
+              : "bg-blue-600 hover:bg-blue-700"
           }`}
         >
           {loading ? "Signing in..." : "Login"}
