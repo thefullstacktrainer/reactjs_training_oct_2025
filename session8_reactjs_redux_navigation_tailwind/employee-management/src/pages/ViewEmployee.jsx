@@ -1,6 +1,7 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { EmployeeContext } from "../context/EmployeeContext.jsx";
+import Toast from "../components/Toast.jsx";
 
 export default function ViewEmployee() {
   const { id } = useParams();
@@ -8,6 +9,8 @@ export default function ViewEmployee() {
   const { employees, deleteEmployee } = useContext(EmployeeContext);
   const [employee, setEmployee] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   useEffect(() => {
     if (Array.isArray(employees)) {
@@ -19,7 +22,7 @@ export default function ViewEmployee() {
 
   if (loading) {
     return (
-      <div style={{ textAlign: "center", marginTop: "2rem", color: "#555" }}>
+      <div className="p-8 text-center text-gray-600">
         <p>Loading employee details...</p>
       </div>
     );
@@ -27,23 +30,58 @@ export default function ViewEmployee() {
 
   if (!employee) {
     return (
-      <div style={{ textAlign: "center", marginTop: "2rem" }}>
-        <h3 style={{ color: "red" }}>Employee not found</h3>
-        <button onClick={() => navigate("/employees")}>Back to Employees</button>
+      <div className="text-center mt-10">
+        <h3 className="text-red-600 text-lg font-semibold mb-2">
+          Employee not found
+        </h3>
+        <button
+          onClick={() => navigate("/employees")}
+          className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded"
+        >
+          Back to Employees
+        </button>
       </div>
     );
   }
 
-  const handleDelete = () => {
-    if (window.confirm(`Are you sure you want to delete ${employee.name}?`)) {
-      deleteEmployee(employee.id);
-      navigate("/employees");
-    }
+  const handleDelete = async () => {
+    await deleteEmployee(employee.id);
+    setToastMessage("Employee deleted successfully");
+    setConfirmDelete(false);
+    setTimeout(() => navigate("/employees"), 1800);
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md mt-8">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">Employee Details</h2>
+    <div className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md mt-8 relative">
+      {toastMessage && <Toast message={toastMessage} onClose={() => setToastMessage("")} />}
+
+      {confirmDelete && (
+        <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded shadow-md max-w-sm text-center">
+            <p className="text-gray-800 mb-4">
+              Are you sure you want to delete <strong>{employee.name}</strong>?
+            </p>
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={handleDelete}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+              >
+                Yes, Delete
+              </button>
+              <button
+                onClick={() => setConfirmDelete(false)}
+                className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+        Employee Details
+      </h2>
       <p><strong>Name:</strong> {employee.name}</p>
       <p><strong>Role:</strong> {employee.role}</p>
       <p><strong>Department:</strong> {employee.department}</p>
@@ -55,7 +93,7 @@ export default function ViewEmployee() {
           </button>
         </Link>
         <button
-          onClick={handleDelete}
+          onClick={() => setConfirmDelete(true)}
           className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
         >
           Delete
