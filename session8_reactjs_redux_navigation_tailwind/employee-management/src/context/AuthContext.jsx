@@ -27,20 +27,25 @@ export function AuthProvider({ children }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-      const data = await res.json();
-      if (res.ok && data.ok) {
-        setUser(data.user);
+
+      const result = await res.json();
+
+      let data = result?.data || result; // handle both shapes
+
+      if (res.ok && (data.ok || data.user)) {
+        const userData = data.user || data;
+        setUser(userData);
         setOfflineMode(false);
         return { ok: true };
       } else {
-        throw new Error(data.message);
+        throw new Error(data.message || "Login failed");
       }
     } catch {
       setOfflineMode(true);
       if (username === "admin" && password === "admin") {
-        const u = { username: "admin", role: "admin" };
-        setUser(u);
-        return { ok: true };
+        const localUser = { username: "admin", role: "admin" };
+        setUser(localUser);
+        return { ok: true, message: "Local login success (offline)" };
       }
       return { ok: false, message: "Invalid credentials or server offline" };
     }
