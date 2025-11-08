@@ -5,19 +5,21 @@ import { EmployeeContext } from "../context/EmployeeContext.jsx";
 export default function ViewEmployee() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { employees, deleteEmployee, offlineMode, loading } = useContext(EmployeeContext);
+  const { employees, deleteEmployee } = useContext(EmployeeContext);
   const [employee, setEmployee] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (Array.isArray(employees) && employees.length > 0) {
-      const found = employees.find((e) => String(e.id) === String(id));
+    if (Array.isArray(employees)) {
+      const found = employees.find((emp) => String(emp.id) === String(id));
       setEmployee(found || null);
+      setLoading(false);
     }
   }, [employees, id]);
 
-  if (loading || (!employee && employees.length === 0)) {
+  if (loading) {
     return (
-      <div className="p-8 text-center text-gray-600">
+      <div style={{ textAlign: "center", marginTop: "2rem", color: "#555" }}>
         <p>Loading employee details...</p>
       </div>
     );
@@ -25,14 +27,9 @@ export default function ViewEmployee() {
 
   if (!employee) {
     return (
-      <div className="text-center mt-10">
-        <h3 className="text-red-600 text-lg font-semibold mb-2">Employee not found</h3>
-        <button
-          onClick={() => navigate("/employees")}
-          className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded"
-        >
-          Back to Employees
-        </button>
+      <div style={{ textAlign: "center", marginTop: "2rem" }}>
+        <h3 style={{ color: "red" }}>Employee not found</h3>
+        <button onClick={() => navigate("/employees")}>Back to Employees</button>
       </div>
     );
   }
@@ -46,15 +43,11 @@ export default function ViewEmployee() {
 
   return (
     <div className="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md mt-8">
-      {offlineMode && (
-        <div className="bg-yellow-50 text-gray-700 p-2 rounded mb-4 text-sm border border-yellow-200">
-          Offline mode active — displaying local data
-        </div>
-      )}
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">Employee Details</h2>
       <p><strong>Name:</strong> {employee.name}</p>
       <p><strong>Role:</strong> {employee.role}</p>
       <p><strong>Department:</strong> {employee.department}</p>
+
       <div className="mt-6 flex gap-3">
         <Link to={`/employees/${employee.id}/edit`}>
           <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">

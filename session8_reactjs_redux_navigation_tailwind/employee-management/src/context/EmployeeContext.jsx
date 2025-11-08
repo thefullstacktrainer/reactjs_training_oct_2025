@@ -25,6 +25,7 @@ export function EmployeeProvider({ children }) {
       setLoading(true);
       const res = await fetch(BASE_URL);
       const data = await res.json();
+
       if (res.ok && Array.isArray(data.data)) {
         setEmployees(data.data);
         setOfflineMode(false);
@@ -50,6 +51,7 @@ export function EmployeeProvider({ children }) {
       setEmployees((prev) => [...prev, newEmp]);
       return;
     }
+
     try {
       const res = await fetch(BASE_URL, {
         method: "POST",
@@ -57,10 +59,13 @@ export function EmployeeProvider({ children }) {
         body: JSON.stringify(emp),
       });
       const data = await res.json();
-      if (res.ok) {
+
+      if (res.ok && data?.data) {
+        setEmployees((prev) => [...prev, data.data]);
+      } else if (res.ok && data) {
         setEmployees((prev) => [...prev, data]);
       } else {
-        throw new Error(data.message);
+        throw new Error("Invalid add response");
       }
     } catch {
       const newEmp = { ...emp, id: uuidv4() };
@@ -70,12 +75,14 @@ export function EmployeeProvider({ children }) {
   };
 
   const updateEmployee = async (id, updatedEmp) => {
-    if (offlineMode) {
-      setEmployees((prev) =>
-        prev.map((emp) => (String(emp.id) === String(id) ? { ...emp, ...updatedEmp } : emp))
-      );
-      return Promise.resolve();
-    }
+    setEmployees((prev) =>
+      prev.map((emp) =>
+        String(emp.id) === String(id) ? { ...emp, ...updatedEmp } : emp
+      )
+    );
+
+    if (offlineMode) return Promise.resolve();
+
     try {
       const res = await fetch(`${BASE_URL}/${id}`, {
         method: "PUT",
@@ -83,19 +90,20 @@ export function EmployeeProvider({ children }) {
         body: JSON.stringify(updatedEmp),
       });
       const data = await res.json();
-      if (res.ok) {
+
+      if (res.ok && data?.data) {
         setEmployees((prev) =>
-          prev.map((emp) => (String(emp.id) === String(id) ? data : emp))
+          prev.map((emp) =>
+            String(emp.id) === String(id) ? data.data : emp
+          )
         );
       } else {
-        throw new Error(data.message);
+        throw new Error("Invalid update response");
       }
     } catch {
-      setEmployees((prev) =>
-        prev.map((emp) => (String(emp.id) === String(id) ? { ...emp, ...updatedEmp } : emp))
-      );
       setOfflineMode(true);
     }
+
     return Promise.resolve();
   };
 
@@ -104,6 +112,7 @@ export function EmployeeProvider({ children }) {
       setEmployees((prev) => prev.filter((emp) => emp.id !== id));
       return;
     }
+
     try {
       const res = await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
       if (res.ok) {

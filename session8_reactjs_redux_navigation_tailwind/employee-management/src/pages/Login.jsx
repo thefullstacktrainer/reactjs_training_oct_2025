@@ -1,47 +1,83 @@
-import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext.jsx';
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [err, setErr] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const from = location.state?.from?.pathname || "/employees";
 
-  // where to redirect after login (default to /employees)
-  const from = location.state?.from?.pathname || '/employees';
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = auth.login({ username, password });
+    setErr("");
+    setLoading(true);
+    const res = await auth.login({ username, password });
+    setLoading(false);
+
     if (res?.ok) {
-      // redirect to where user wanted to go
       navigate(from, { replace: true });
     } else {
-      setErr(res?.message || 'Login failed');
+      setErr(res?.message || "Login failed");
     }
   };
 
   return (
-    <div style={{ maxWidth: 420 }}>
-      <h2>Login</h2>
-      {err && <div style={{ color: 'red' }}>{err}</div>}
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: 8 }}>
-          <label>Username</label><br />
-          <input value={username} onChange={e => setUsername(e.target.value)} />
+    <div className="max-w-sm mx-auto bg-white p-6 rounded-lg shadow-md mt-12">
+      <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">
+        Login
+      </h2>
+
+      {err && (
+        <div className="text-red-600 text-sm text-center mb-4">{err}</div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">
+            Username
+          </label>
+          <input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+            placeholder="Enter username"
+          />
         </div>
-        <div style={{ marginBottom: 8 }}>
-          <label>Password</label><br />
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">
+            Password
+          </label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+            placeholder="Enter password"
+          />
         </div>
-        <button type="submit">Login</button>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full text-white font-medium py-2 rounded ${
+            loading
+              ? "bg-blue-400 cursor-wait"
+              : "bg-blue-600 hover:bg-blue-700"
+          }`}
+        >
+          {loading ? "Signing in..." : "Login"}
+        </button>
       </form>
 
-      <p style={{ marginTop: 12, fontSize: 13 }}>
-        Tip: use <code>admin / admin</code> to login as admin for this demo.
+      <p className="text-xs text-gray-500 text-center mt-3">
+        Tip: use <code>admin / admin</code> to log in as admin.
       </p>
     </div>
   );
