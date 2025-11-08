@@ -4,10 +4,12 @@ import { removeStudent } from './studentSlice'
 
 function StudentList() {
     const students = useSelector((state) => state.students.list)
+    const company = useSelector((state) => state.students.company)
     const dispatch = useDispatch()
+    const results = useSelector((state) => state.results.scores)
   return (
     <div>
-        <h2>Registered Students</h2>
+        <h2>Registered Students for {company}</h2>
         <ul>
             {
                 students.map((student) => (
@@ -21,6 +23,7 @@ function StudentList() {
                 ))
             }
         </ul>
+        {results.map(result => <span> {result}</span>)}
 
     </div>
   )

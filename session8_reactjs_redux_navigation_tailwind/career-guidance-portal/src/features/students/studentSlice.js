@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit"
 const studentSlice = createSlice({
     name: "students",
     initialState: {
-        list: []
+        list: [],
+        company:"Intellipaat"
     },
     reducers: {
         addStudent: (state, action) => {
