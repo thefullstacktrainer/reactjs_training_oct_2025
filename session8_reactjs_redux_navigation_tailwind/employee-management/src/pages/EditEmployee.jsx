@@ -36,7 +36,7 @@ export default function EditEmployee() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    const updated = await updateEmployee(id, formData);
+    await updateEmployee(id, formData);
     setSaving(false);
 
     setToastMessage("Changes saved successfully");
@@ -45,7 +45,7 @@ export default function EditEmployee() {
     setTimeout(() => {
       setToastMessage("");
       setShowRedirectLoading(false);
-      navigate(`/employees/${updated.id}`);
+      navigate("/employees");
     }, 2000);
   };
 
@@ -62,7 +62,7 @@ export default function EditEmployee() {
       {showRedirectLoading && (
         <div className="absolute inset-0 bg-white/70 flex flex-col items-center justify-center rounded-lg z-40">
           <div className="loader border-4 border-gray-300 border-t-blue-600 rounded-full w-10 h-10 animate-spin mb-2"></div>
-          <p className="text-gray-600 text-sm">Redirecting...</p>
+          <p className="text-gray-600 text-sm">Redirecting to Employee List...</p>
         </div>
       )}
 
@@ -117,7 +117,7 @@ export default function EditEmployee() {
           </button>
           <button
             type="button"
-            onClick={() => navigate(`/employees/${id}`)}
+            onClick={() => navigate("/employees")}
             className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded"
           >
             Cancel
