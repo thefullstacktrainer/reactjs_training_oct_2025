@@ -110,21 +110,25 @@ export function EmployeeProvider({ children }) {
   const deleteEmployee = async (id) => {
     if (offlineMode) {
       setEmployees((prev) => prev.filter((emp) => emp.id !== id));
-      return;
+      return { ok: true };
     }
 
     try {
       const res = await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
-      if (res.ok) {
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && (data.ok || data.data || Object.keys(data).length === 0)) {
         setEmployees((prev) => prev.filter((emp) => emp.id !== id));
+        return { ok: true };
       } else {
         throw new Error("Delete failed");
       }
     } catch {
       setEmployees((prev) => prev.filter((emp) => emp.id !== id));
       setOfflineMode(true);
+      return { ok: false };
     }
   };
+
 
   return (
     <EmployeeContext.Provider

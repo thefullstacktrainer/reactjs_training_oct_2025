@@ -9,6 +9,7 @@ export default function ViewEmployee() {
   const { employees, deleteEmployee } = useContext(EmployeeContext);
   const [employee, setEmployee] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
@@ -23,6 +24,7 @@ export default function ViewEmployee() {
   if (loading) {
     return (
       <div className="p-8 text-center text-gray-600">
+        <div className="loader mx-auto mb-2"></div>
         <p>Loading employee details...</p>
       </div>
     );
@@ -45,10 +47,17 @@ export default function ViewEmployee() {
   }
 
   const handleDelete = async () => {
-    await deleteEmployee(employee.id);
-    setToastMessage("Employee deleted successfully");
+    setDeleting(true);
+    const res = await deleteEmployee(employee.id);
+    setDeleting(false);
     setConfirmDelete(false);
-    setTimeout(() => navigate("/employees"), 1800);
+
+    if (res.ok) {
+      setToastMessage("Employee deleted successfully");
+      setTimeout(() => navigate("/employees"), 1800);
+    } else {
+      setToastMessage("Failed to delete employee");
+    }
   };
 
   return (
@@ -64,12 +73,18 @@ export default function ViewEmployee() {
             <div className="flex justify-center gap-3">
               <button
                 onClick={handleDelete}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+                disabled={deleting}
+                className={`px-4 py-2 rounded text-white ${
+                  deleting
+                    ? "bg-red-400 cursor-wait"
+                    : "bg-red-600 hover:bg-red-700"
+                }`}
               >
-                Yes, Delete
+                {deleting ? "Deleting..." : "Yes, Delete"}
               </button>
               <button
                 onClick={() => setConfirmDelete(false)}
+                disabled={deleting}
                 className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded"
               >
                 Cancel
