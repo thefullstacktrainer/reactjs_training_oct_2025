@@ -2,14 +2,12 @@ import React, { createContext, useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export const EmployeeContext = createContext();
-
 const BASE_URL = "http://localhost:5001/api/employees";
 
-// Local fallback data
 const defaultEmployees = [
-  { id: uuidv4(), name: "Rajesh", role: "Developer", department: "IT" },
-  { id: uuidv4(), name: "Preeti", role: "HR Manager", department: "Human Resources" },
-  { id: uuidv4(), name: "Krishna", role: "Accountant", department: "Finance" },
+  { id: uuidv4(), name: "Ramesh", role: "Developer", department: "IT" },
+  { id: uuidv4(), name: "Priya", role: "HR Manager", department: "Human Resources" },
+  { id: uuidv4(), name: "Kiran", role: "Accountant", department: "Finance" },
 ];
 
 export function EmployeeProvider({ children }) {
@@ -27,23 +25,17 @@ export function EmployeeProvider({ children }) {
       setLoading(true);
       const res = await fetch(BASE_URL);
       const data = await res.json();
-
-      // Ensure we set array, not entire object
       if (res.ok && Array.isArray(data.data)) {
         setEmployees(data.data);
         setOfflineMode(false);
-      } 
-      else if (res.ok && Array.isArray(data)) {
+      } else if (res.ok && Array.isArray(data)) {
         setEmployees(data);
         setOfflineMode(false);
-      } 
-      else {
-        console.warn("⚠️ API response invalid or not array, using fallback");
+      } else {
         setEmployees(defaultEmployees);
         setOfflineMode(true);
       }
-    } catch (err) {
-      console.warn("⚠️ Backend unreachable — using local fallback data");
+    } catch {
       setEmployees(defaultEmployees);
       setOfflineMode(true);
       setError("Backend not reachable, using local data.");
@@ -56,10 +48,8 @@ export function EmployeeProvider({ children }) {
     if (offlineMode) {
       const newEmp = { ...emp, id: uuidv4() };
       setEmployees((prev) => [...prev, newEmp]);
-      alert("Added locally (offline mode)");
       return;
     }
-
     try {
       const res = await fetch(BASE_URL, {
         method: "POST",
@@ -72,9 +62,9 @@ export function EmployeeProvider({ children }) {
       } else {
         throw new Error(data.message);
       }
-    } catch (err) {
-      console.error("Add failed:", err);
-      setEmployees((prev) => [...prev, { ...emp, id: uuidv4() }]);
+    } catch {
+      const newEmp = { ...emp, id: uuidv4() };
+      setEmployees((prev) => [...prev, newEmp]);
       setOfflineMode(true);
     }
   };
@@ -82,11 +72,10 @@ export function EmployeeProvider({ children }) {
   const updateEmployee = async (id, updatedEmp) => {
     if (offlineMode) {
       setEmployees((prev) =>
-        prev.map((emp) => (emp.id === id ? { ...emp, ...updatedEmp } : emp))
+        prev.map((emp) => (String(emp.id) === String(id) ? { ...emp, ...updatedEmp } : emp))
       );
-      return;
+      return Promise.resolve();
     }
-
     try {
       const res = await fetch(`${BASE_URL}/${id}`, {
         method: "PUT",
@@ -96,18 +85,18 @@ export function EmployeeProvider({ children }) {
       const data = await res.json();
       if (res.ok) {
         setEmployees((prev) =>
-          prev.map((emp) => (emp.id === id ? data : emp))
+          prev.map((emp) => (String(emp.id) === String(id) ? data : emp))
         );
       } else {
         throw new Error(data.message);
       }
-    } catch (err) {
-      console.warn("⚠️ Update failed, doing local update");
+    } catch {
       setEmployees((prev) =>
-        prev.map((emp) => (emp.id === id ? { ...emp, ...updatedEmp } : emp))
+        prev.map((emp) => (String(emp.id) === String(id) ? { ...emp, ...updatedEmp } : emp))
       );
       setOfflineMode(true);
     }
+    return Promise.resolve();
   };
 
   const deleteEmployee = async (id) => {
@@ -115,7 +104,6 @@ export function EmployeeProvider({ children }) {
       setEmployees((prev) => prev.filter((emp) => emp.id !== id));
       return;
     }
-
     try {
       const res = await fetch(`${BASE_URL}/${id}`, { method: "DELETE" });
       if (res.ok) {
@@ -123,8 +111,7 @@ export function EmployeeProvider({ children }) {
       } else {
         throw new Error("Delete failed");
       }
-    } catch (err) {
-      console.warn("⚠️ Delete failed, removing locally");
+    } catch {
       setEmployees((prev) => prev.filter((emp) => emp.id !== id));
       setOfflineMode(true);
     }

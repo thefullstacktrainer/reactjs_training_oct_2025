@@ -20,9 +20,6 @@ export function AuthProvider({ children }) {
     else localStorage.removeItem("auth_user");
   }, [user]);
 
-  // -----------------------------
-  // Try backend login; fallback to local
-  // -----------------------------
   const login = async ({ username, password }) => {
     try {
       const res = await fetch(`${BASE_URL}/login`, {
@@ -30,7 +27,6 @@ export function AuthProvider({ children }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-
       const data = await res.json();
       if (res.ok && data.ok) {
         setUser(data.user);
@@ -39,29 +35,22 @@ export function AuthProvider({ children }) {
       } else {
         throw new Error(data.message);
       }
-    } catch (err) {
-      console.warn("⚠️ Backend login failed, using local fallback");
+    } catch {
       setOfflineMode(true);
-
       if (username === "admin" && password === "admin") {
         const u = { username: "admin", role: "admin" };
         setUser(u);
-        return { ok: true, message: "Logged in locally (offline mode)" };
+        return { ok: true };
       }
-
       return { ok: false, message: "Invalid credentials or server offline" };
     }
   };
 
   const logout = async () => {
     try {
-      if (!offlineMode)
-        await fetch(`${BASE_URL}/logout`, { method: "POST" });
-    } catch {
-      console.warn("⚠️ Backend logout failed, clearing locally");
-    } finally {
-      setUser(null);
-    }
+      if (!offlineMode) await fetch(`${BASE_URL}/logout`, { method: "POST" });
+    } catch {}
+    setUser(null);
   };
 
   return (
