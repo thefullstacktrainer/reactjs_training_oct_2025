@@ -14,18 +14,22 @@ export default function Login() {
   const auth = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/employees";
+
+  // always redirect to home after successful login
+  const from = "/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErr("");
     setLoading(true);
+
     const res = await auth.login({ username, password });
     setLoading(false);
 
     if (res?.ok) {
       setToast(`Welcome back, ${username}!`);
       setRedirecting(true);
+
       setTimeout(() => {
         setRedirecting(false);
         navigate(from, { replace: true });
