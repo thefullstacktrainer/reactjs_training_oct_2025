@@ -6,7 +6,7 @@ import authReducer from "../features/auth/authSlice";
 import studentsReducer from "../features/students/studentSlice";
 import sessionsReducer from "../features/sessions/sessionsSlice";
 import mentorsReducer from "../features/mentors/mentorSlice";
-import logsReducer from "../features/logs/logSlice";
+import logsReducer from "../features/applogs/logSlice";
 import liveAnalyticsReducer from "../features/analytics/liveAnalyticsSlice";
 import sessionEventsReducer from "../features/sessions/sessionEventsSlice";
 import progressReducer from "../features/students/progressSlice";

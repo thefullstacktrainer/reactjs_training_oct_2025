@@ -7,7 +7,7 @@ import LoginForm from "./features/auth/LoginForm";
 import StudentList from "./features/students/StudentList";
 import SessionsList from "./features/sessions/SessionsList";
 import MentorAdmin from "./features/mentors/MentorAdmin";
-import LogsViewer from "./features/logs/LogsViewer";
+import LogsViewer from "./features/applogs/LogsViewer";
 import NotificationFeed from "./features/notifications/NotificationFeed";
 import SessionSocketListener from "./features/sessions/SessionSocketListener";
 import ProgressSocketListener from "./features/students/ProgressSocketListener";

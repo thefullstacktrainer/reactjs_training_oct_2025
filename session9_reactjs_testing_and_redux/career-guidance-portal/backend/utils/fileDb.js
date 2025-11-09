@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ✅ Base directory for data storage
+// Base directory for data storage
 const dataDir = path.join(__dirname, "../data");
 
 export async function readData(fileName) {

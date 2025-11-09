@@ -4,7 +4,7 @@ import { socket } from "../../api/socket";
 
 const AUTH_API = "/mentors";
 
-// 🔹 Async thunk for login
+// Async thunk for login
 export const login = createAsyncThunk(
   "auth/login",
   async (credentials, { rejectWithValue }) => {
@@ -28,7 +28,7 @@ const authSlice = createSlice({
       state.token = null;
       state.status = "idle";
       state.error = null;
-      setAuthToken(null); // ✅ clear auth header
+      setAuthToken(null); // clear auth header
       socket.disconnect(); // optional cleanup
     },
   },
@@ -43,10 +43,10 @@ const authSlice = createSlice({
         state.user = action.payload;
         state.token = action.payload.token;
 
-        // ✅ set token in axios header
+        // set token in axios header
         setAuthToken(action.payload.token);
 
-        // ✅ auto-join mentor socket room
+        // auto-join mentor socket room
         if (action.payload?.id) {
           socket.connect();
           socket.emit("joinRoom", `mentor_${action.payload.id}`);
