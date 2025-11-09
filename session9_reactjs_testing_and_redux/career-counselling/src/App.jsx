@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import './App.css'
-
+import CareerCard from './components/CareerCard'
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
       <div>
-        Welcome to last session of ReactJS
+        <p>Welcome to last session of ReactJS</p>
+
+        <CareerCard title="SE" description="Software Engineer"/>
       </div>
     </>
   )
