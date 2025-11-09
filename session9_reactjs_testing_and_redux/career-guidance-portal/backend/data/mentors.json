@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "name": "Lakshmikant Deshpande",
+    "email": "lakshmikant@portal.com",
+    "password": "$2a$10$f8iN4fazm/Qs5dAKvdChuOn99/M2pRLeGOFUmecDqIpRROzQ6fOWa",
+    "role": "admin",
+    "department": "AI"
+  }
+]
