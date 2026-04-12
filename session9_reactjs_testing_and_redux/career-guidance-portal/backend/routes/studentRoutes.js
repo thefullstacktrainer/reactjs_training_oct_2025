@@ -1,0 +1,11 @@
+import express from "express";
+import { protect, allowRoles } from "../middleware/authMiddleware.js";
+import { getStudents, addStudent, deleteStudent, assignMentor, myMentees, updateProgress } from "../controllers/studentController.js";
+const router = express.Router();
+router.get("/", protect, getStudents);
+router.get("/mine", protect, myMentees);
+router.post("/", protect, addStudent);
+router.put("/:id/assign", protect, allowRoles("admin","mentor"), assignMentor);
+router.put("/:id/progress", protect, allowRoles("admin","mentor"), updateProgress);
+router.delete("/:id", protect, allowRoles("admin"), deleteStudent);
+export default router;

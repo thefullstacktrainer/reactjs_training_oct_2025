@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Lakshmikant Deshpande",
+    "email": "lakshmikant@portal.com",
+    "password": "$2a$10$f8iN4fazm/Qs5dAKvdChuOn99/M2pRLeGOFUmecDqIpRROzQ6fOWa",
+    "role": "admin",
+    "department": "AI"
+  },
+  {
+    "id": 1762663081216,
+    "name": "admin",
+    "email": "admin@portal.com",
+    "password": "$2a$10$KzWOW2LFmfCPZALiSxmQ2.MOG5.3j2CNVikEfd6XrSE29QsqTqZTu",
+    "role": "admin",
+    "department": "AI"
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1762662399491,
+    "ts": "2025-11-09T04:26:39.491Z",
+    "actorId": 1,
+    "actorEmail": "lakshmikant@portal.com",
+    "action": "CREATE",
+    "entity": "student",
+    "entityId": 1762662399488
+  }
+]

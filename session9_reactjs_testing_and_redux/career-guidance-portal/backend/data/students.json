@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1762662399488,
+    "name": "Aravind",
+    "email": "aravind@portal.com",
+    "careerGoal": "AI",
+    "careerTrack": "AI",
+    "progress": 0
+  },
+  {
+    "id": 1762663032287,
+    "name": "Rajest",
+    "email": "raj@portal.com",
+    "careerGoal": "Devops",
+    "careerTrack": "DevOps",
+    "progress": 0
+  }
+]

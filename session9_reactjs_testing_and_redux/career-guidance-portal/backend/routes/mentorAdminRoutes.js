@@ -1,0 +1,10 @@
+import express from "express";
+import { protect, allowRoles } from "../middleware/authMiddleware.js";
+import { listMentors, createMentor, updateMentor, deleteMentor } from "../controllers/mentorCrudController.js";
+const router = express.Router();
+router.use(protect, allowRoles("admin"));
+router.get("/", listMentors);
+router.post("/", createMentor);
+router.put("/:id", updateMentor);
+router.delete("/:id", deleteMentor);
+export default router;
